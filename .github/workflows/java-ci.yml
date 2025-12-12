@@ -22,7 +22,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Compile Java files
-      run: javac *.java
+      run: javac $(find src -name "*.java")
 
-    - name: Run Tests (Optional)
-      run: java Main ComplexityTest.java
+    - name: Run CodeChecker on test file
+      run: java -cp src Main src/ComplexityTest.java
