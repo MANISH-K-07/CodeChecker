@@ -124,3 +124,6 @@ This project demonstrates:
 - Understanding of code quality metrics and complexity analysis
 - Ability to create professional, automated, and well-documented projects for GitHub portfolios
 
+## License
+
+This project is open-source and available under the MIT License.
