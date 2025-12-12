@@ -22,7 +22,9 @@ jobs:
         distribution: 'temurin'
 
     - name: Compile Java files
-      run: javac $(find src -name "*.java")
+      run: |
+        mkdir -p out
+        javac -d out $(find src -name "*.java")
 
     - name: Run CodeChecker on test file
-      run: java -cp src Main src/ComplexityTest.java
+      run: java -cp out Main src/ComplexityTest.java
