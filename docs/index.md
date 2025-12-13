@@ -18,7 +18,7 @@ and usage of CodeChecker.
 ### Cyclomatic Complexity
 - File-level cyclomatic complexity
 - Method-level complexity analysis
-- Detection of logical operators (&&, ||), loops, conditionals, and switches
+- Detection of logical operators, loops, conditionals, and switches
 
 ### Developer Tooling
 - Command-line execution
