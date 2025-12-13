@@ -127,3 +127,51 @@ This project demonstrates:
 ## License
 
 This project is open-source and available under the MIT License.
+
+## 🚧 Roadmap & Future Enhancements
+
+CodeChecker is designed with extensibility and scalability in mind.
+The following enhancements outline how the tool can evolve into a
+full-fledged static analysis framework.
+
+### Planned Enhancements
+
+- **Multi-file and Project-level Analysis**
+  - Analyze entire Java projects instead of a single file
+  - Aggregate complexity and style metrics across packages
+
+- **AST-based Static Analysis**
+  - Replace keyword-based parsing with Abstract Syntax Tree (AST) analysis
+  - Improve accuracy using libraries such as JavaParser
+  - Enable detection of deeper structural issues
+
+- **Integration with Existing Tools**
+  - Support selected rules from Checkstyle and PMD
+  - Allow users to enable/disable rules selectively
+
+- **Configuration File Support**
+  - Introduce a `codechecker.config.json` file
+  - Allow customization of:
+    - Indentation rules
+    - Complexity thresholds
+    - Enabled/disabled checks
+
+- **JUnit-based Test Suite**
+  - Add automated unit tests for all checkers
+  - Improve reliability and regression detection
+  - Integrate test execution into GitHub Actions CI
+
+- **Package and Module Awareness**
+  - Support Java package structures
+  - Enable package-level complexity and style summaries
+
+- **Machine-readable Output**
+  - Provide JSON output for CI/CD and toolchain integration
+  - Enable IDE plugins and external dashboards
+
+### Long-term Vision
+
+The long-term goal of CodeChecker is to evolve into a lightweight,
+configurable static analysis tool that can be easily integrated into
+developer workflows, CI pipelines, and educational environments.
+
