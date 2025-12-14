@@ -143,3 +143,18 @@ This project demonstrates:
 - Clean architecture and automation using CI/CD
 
 Designed as a portfolio project.
+
+---
+
+## CodeChecker in Action 🚀
+
+Below is a live demonstration of **CodeChecker** running in the terminal and printing analysis results in real time.
+
+![CodeChecker Terminal Demo](images/codechecker-terminal.gif)
+
+**What this demo shows:**
+- Running CodeChecker on a Java file
+- Simple & Advanced Cyclomatic Complexity
+- Per-method complexity analysis
+- Clean console output (no style issues found)
+- Optional JSON output support
