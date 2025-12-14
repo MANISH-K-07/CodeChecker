@@ -222,3 +222,12 @@ The long-term goal of CodeChecker is to evolve into a lightweight,
 configurable static analysis tool that can be easily integrated into
 developer workflows, CI pipelines, and educational environments.
 
+---
+
+# CodeChecker in Action 🚀
+
+Below is a live demonstration of **CodeChecker** running in the terminal and printing analysis results in real time.
+
+Have a sneak-peek 😉
+
+![CodeChecker Terminal Demo](images/codechecker-terminal.gif)
