@@ -1,26 +1,68 @@
 import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class Main {
 
     public static void main(String[] args) {
 
         if (args.length == 0) {
-            System.out.println("Usage: java Main <filepath>");
+            System.out.println("Usage: java Main <filepath> [--json]");
             return;
         }
 
         String filePath = args[0];
+        boolean jsonOutput = false;
 
-        System.out.println("=== CodeChecker ===\n");
-
-        boolean anyIssues = false;
+        // Check for JSON flag
+        for (String arg : args) {
+            if (arg.equals("--json")) {
+                jsonOutput = true;
+            }
+        }
 
         // ---------------------------------------------------
-        // 1. Indentation
+        // Run all checks (analysis phase)
         // ---------------------------------------------------
         List<String> indentationIssues = IndentationChecker.checkIndentation(filePath);
+        List<String> todoIssues = TodoChecker.checkTodos(filePath);
+        List<String> whitespaceIssues = TrailingWhitespaceChecker.checkTrailingWhitespace(filePath);
+
+        // Cyclomatic complexity is always calculated but not considered an "issue"
+        int simpleComplexity = SimpleCyclomaticComplexityChecker.calculate(filePath);
+
+        // Use the analyze() method for advanced complexity
+        AdvancedCyclomaticComplexityChecker.Result advancedResult =
+                AdvancedCyclomaticComplexityChecker.analyze(filePath);
+        int advancedComplexity = advancedResult.totalComplexity;
+
+        // anyIssues only tracks real code style issues (not complexity)
+        boolean anyIssues = !indentationIssues.isEmpty() || !todoIssues.isEmpty() || !whitespaceIssues.isEmpty();
+
+        // ---------------------------------------------------
+        // JSON OUTPUT MODE
+        // ---------------------------------------------------
+        if (jsonOutput) {
+            Map<String, Object> report = new LinkedHashMap<>(); // preserves order
+            report.put("file", filePath);
+            report.put("indentationIssues", indentationIssues);
+            report.put("todoIssues", todoIssues);
+            report.put("trailingWhitespaceIssues", whitespaceIssues);
+            report.put("simpleCyclomaticComplexity", simpleComplexity);
+            report.put("advancedCyclomaticComplexityTotal", advancedComplexity);
+            report.put("advancedCyclomaticComplexityPerMethod", advancedResult.methodComplexity);
+            report.put("anyIssues", anyIssues);
+
+            System.out.println(JsonReportGenerator.generate(report));
+            return;
+        }
+
+        // ---------------------------------------------------
+        // NORMAL CONSOLE OUTPUT
+        // ---------------------------------------------------
+        System.out.println("=== CodeChecker ===\n");
+
         if (!indentationIssues.isEmpty()) {
-            anyIssues = true;
             System.out.println("Indentation Issues:");
             for (String issue : indentationIssues) {
                 System.out.println("  " + issue);
@@ -28,12 +70,7 @@ public class Main {
             System.out.println();
         }
 
-        // ---------------------------------------------------
-        // 2. TODO/FIXME
-        // ---------------------------------------------------
-        List<String> todoIssues = TodoChecker.checkTodos(filePath);
         if (!todoIssues.isEmpty()) {
-            anyIssues = true;
             System.out.println("TODO/FIXME Issues:");
             for (String issue : todoIssues) {
                 System.out.println("  " + issue);
@@ -41,12 +78,7 @@ public class Main {
             System.out.println();
         }
 
-        // ---------------------------------------------------
-        // 3. Trailing Whitespace
-        // ---------------------------------------------------
-        List<String> whitespaceIssues = TrailingWhitespaceChecker.checkTrailingWhitespace(filePath);
         if (!whitespaceIssues.isEmpty()) {
-            anyIssues = true;
             System.out.println("Trailing Whitespace Issues:");
             for (String issue : whitespaceIssues) {
                 System.out.println("  " + issue);
@@ -54,28 +86,20 @@ public class Main {
             System.out.println();
         }
 
-        // ---------------------------------------------------
-        // 4. Simple Cyclomatic Complexity
-        // ---------------------------------------------------
-        int simpleComplexity = SimpleCyclomaticComplexityChecker.calculate(filePath);
-        if (simpleComplexity > 1) { // base complexity = 1
-            anyIssues = true;
+        // Always print Cyclomatic Complexity
+        if (simpleComplexity > 0) {
             System.out.println("Simple Cyclomatic Complexity:");
             System.out.println("Total Complexity: " + simpleComplexity + "\n");
         }
 
-        // ---------------------------------------------------
-        // 5. Advanced Cyclomatic Complexity
-        // ---------------------------------------------------
-        int advancedTotal = AdvancedCyclomaticComplexityChecker.calculate(filePath); // returns total complexity
-        if (advancedTotal > 0) {
-            anyIssues = true;
-            System.out.println(); // add spacing for readability
+        if (advancedComplexity > 0) {
+            System.out.println("Advanced Cyclomatic Complexity per method:");
+            for (Map.Entry<String, Integer> entry : advancedResult.methodComplexity.entrySet()) {
+                System.out.println("Method: " + entry.getKey() + " - Complexity: " + entry.getValue());
+            }
+            System.out.println("File Total Complexity: " + advancedComplexity + "\n");
         }
 
-        // ---------------------------------------------------
-        // Final Status
-        // ---------------------------------------------------
         if (!anyIssues) {
             System.out.println("No code style issues found!");
         }

@@ -7,10 +7,24 @@ import java.util.Map;
 public class AdvancedCyclomaticComplexityChecker {
 
     /**
-     * Calculates method-level cyclomatic complexity and prints details.
-     * Returns total file complexity as int.
+     * Result class to hold per-method and total cyclomatic complexity
      */
-    public static int calculate(String filePath) {
+    public static class Result {
+        public final Map<String, Integer> methodComplexity;
+        public final int totalComplexity;
+
+        public Result(Map<String, Integer> methodComplexity, int totalComplexity) {
+            this.methodComplexity = methodComplexity;
+            this.totalComplexity = totalComplexity;
+        }
+    }
+
+    /**
+     * Analyze a Java file and calculate cyclomatic complexity per method and total.
+     * @param filePath Path to the Java source file
+     * @return Result object containing per-method complexity map and total complexity
+     */
+    public static Result analyze(String filePath) {
         Map<String, Integer> methodComplexity = new LinkedHashMap<>();
         int totalComplexity = 0;
 
@@ -18,7 +32,7 @@ public class AdvancedCyclomaticComplexityChecker {
             String line;
             String currentMethod = null;
             int braceDepth = 0;
-            int methodComplexityCounter = 0;
+            int counter = 0;
 
             while ((line = br.readLine()) != null) {
                 String trimmed = line.trim();
@@ -35,69 +49,59 @@ public class AdvancedCyclomaticComplexityChecker {
                 if (trimmed.matches(".*\\b(public|private|protected)?\\s*(static)?\\s*\\w+\\s+\\w+\\s*\\(.*\\)\\s*\\{.*")) {
                     currentMethod = extractMethodName(trimmed);
                     braceDepth = 1; // opening brace of method
-                    methodComplexityCounter = 1; // base complexity
+                    counter = 1;    // base complexity
                     continue;
                 }
 
                 // Update brace depth
-                braceDepth += countOccurrences(trimmed, "{");
-                braceDepth -= countOccurrences(trimmed, "}");
+                braceDepth += count(trimmed, "{");
+                braceDepth -= count(trimmed, "}");
 
-                // Count cyclomatic complexity inside a method
                 if (currentMethod != null) {
-                    if (trimmed.matches("^if\\b.*")) methodComplexityCounter++;
-                    if (trimmed.matches("^for\\b.*")) methodComplexityCounter++;
-                    if (trimmed.matches("^while\\b.*")) methodComplexityCounter++;
-                    if (trimmed.matches(".*\\bcatch\\b.*")) methodComplexityCounter++;
-                    if (trimmed.matches("^case\\b.*")) methodComplexityCounter++;
-                    methodComplexityCounter += countOccurrences(trimmed, "&&");
-                    methodComplexityCounter += countOccurrences(trimmed, "||");
+                    // Count cyclomatic complexity decision points
+                    if (trimmed.matches("^if\\b.*")) counter++;
+                    if (trimmed.matches("^for\\b.*")) counter++;
+                    if (trimmed.matches("^while\\b.*")) counter++;
+                    if (trimmed.matches(".*\\bcatch\\b.*")) counter++;
+                    if (trimmed.matches("^case\\b.*")) counter++;
+                    counter += count(trimmed, "&&");
+                    counter += count(trimmed, "||");
 
-                    // If method ends
+                    // End of method
                     if (braceDepth == 0) {
-                        methodComplexity.put(currentMethod, methodComplexityCounter);
-                        totalComplexity += methodComplexityCounter;
+                        methodComplexity.put(currentMethod, counter);
+                        totalComplexity += counter;
                         currentMethod = null;
-                        methodComplexityCounter = 0;
+                        counter = 0;
                     }
                 }
             }
-
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
-            return 0;
         }
 
-        // Print results only if methods exist
-        if (!methodComplexity.isEmpty()) {
-            System.out.println("Advanced Cyclomatic Complexity per method:");
-            for (Map.Entry<String, Integer> entry : methodComplexity.entrySet()) {
-                System.out.println("Method: " + entry.getKey() + " - Complexity: " + entry.getValue());
-            }
-            System.out.println("File Total Complexity: " + totalComplexity);
-        }
-
-        return totalComplexity;
+        return new Result(methodComplexity, totalComplexity);
     }
 
-    // Helper to extract method name from signature
+    /**
+     * Extract method name from a declaration line
+     */
     private static String extractMethodName(String line) {
-        // Remove modifiers and return type
         line = line.replaceAll("(public|private|protected|static|final|synchronized|abstract)\\s+", "");
         line = line.replaceAll("\\s*\\(.*", ""); // remove parameters
         String[] parts = line.trim().split("\\s+");
         return parts[parts.length - 1];
     }
 
-    // Helper to count occurrences of a token in a line
-    private static int countOccurrences(String str, String token) {
-        int count = 0;
-        int index = 0;
-
-        while ((index = str.indexOf(token, index)) != -1) {
-            count++;
-            index += token.length();
+    /**
+     * Count occurrences of a token in a line
+     */
+    private static int count(String str, String token) {
+        int c = 0, i = 0;
+        while ((i = str.indexOf(token, i)) != -1) {
+            c++;
+            i += token.length();
         }
-        return count;
+        return c;
     }
 }
