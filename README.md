@@ -1,8 +1,11 @@
+![Java CI](https://github.com/MANISH-K-07/CodeChecker/actions/workflows/java-ci.yml/badge.svg)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Java](https://img.shields.io/badge/Java-8-blue)
+
 # CodeChecker
 
 **Java-based Code Linter and Cyclomatic Complexity Analyzer**
 
-- [Java CI](https://github.com/MANISH-K-07/CodeChecker/actions/workflows/java-ci.yml/badge.svg)
 - [Actions](https://github.com/MANISH-K-07/CodeChecker/actions)
 
 ---
