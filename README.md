@@ -7,6 +7,16 @@
 
 ---
 
+## CodeChecker in Action 🚀
+
+Below is a live demonstration of **CodeChecker** running in the terminal and printing analysis results in real time.
+
+Have a sneak-peek 😉
+
+![CodeChecker Terminal Demo](docs/images/codechecker-terminal.gif)
+
+---
+
 ## **Project Overview**
 
 CodeChecker is a professional-grade **Java code analysis tool** designed for learning, portfolio, and profile-building purposes.  
@@ -223,11 +233,3 @@ configurable static analysis tool that can be easily integrated into
 developer workflows, CI pipelines, and educational environments.
 
 ---
-
-# CodeChecker in Action 🚀
-
-Below is a live demonstration of **CodeChecker** running in the terminal and printing analysis results in real time.
-
-Have a sneak-peek 😉
-
-![CodeChecker Terminal Demo](docs/images/codechecker-terminal.gif)
