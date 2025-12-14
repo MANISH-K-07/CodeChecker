@@ -6,7 +6,7 @@
 
 **Java-based Code Linter and Cyclomatic Complexity Analyzer**
 
-- [Actions](https://github.com/MANISH-K-07/CodeChecker/actions)
+- [Workflow Runs](https://github.com/MANISH-K-07/CodeChecker/actions)
 
 ---
 
