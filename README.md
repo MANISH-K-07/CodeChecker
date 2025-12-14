@@ -89,6 +89,47 @@ java -cp out Main src/ComplexityTest.java
 - `Main.java` is the entry point
 - Replace `ComplexityTest.java` with any Java file you want to analyze
 
+## JSON Output
+
+You can now generate machine-readable JSON output with the --json flag:
+```
+java -cp src/main/java Main <filepath> --json
+```
+Example:
+```
+java -cp src/main/java Main src/ComplexityTest.java --json
+```
+Sample JSON Output:
+```
+{
+  "file": src/ComplexityTest.java,
+  "indentationIssues": [],
+  "todoIssues": [],
+  "trailingWhitespaceIssues": [],
+  "simpleCyclomaticComplexity": 10,
+  "advancedCyclomaticComplexityTotal": 10,
+  "advancedCyclomaticComplexityPerMethod": {main=10},
+  "anyIssues": false
+}
+```
+Notes:
+
+- `anyIssues` only tracks real style/code issues (indentation, TODOs/FIXME, trailing whitespaces). Cyclomatic complexity is always reported but doesn’t affect this flag.
+
+- `advancedCyclomaticComplexityPerMethod` provides method-level complexity, while `advancedCyclomaticComplexityTotal` is the sum for the file.
+
+Checks Performed:
+
+1. Indentation
+
+2. TODO/FIXME Comments
+
+3. Trailing Whitespace
+
+4. Simple Cyclomatic Complexity
+
+5. Advanced Cyclomatic Complexity (per method and total)
+
 ## Run GitHub Actions CI
 
 - The workflow automatically runs on every push to main
@@ -100,17 +141,23 @@ java -cp out Main src/ComplexityTest.java
 CodeChecker/
 │
 ├─ src/
-│   ├─ Main.java
-│   ├─ IndentationChecker.java
-│   ├─ TodoChecker.java
-│   ├─ TrailingWhitespaceChecker.java
-│   ├─ SimpleCyclomaticComplexityChecker.java
-│   ├─ AdvancedCyclomaticComplexityChecker.java
-│   ├─ ComplexityTest.java
+│   ├─ main/
+│   │   └─ java/
+│   │       ├─ Main.java
+│   │       ├─ IndentationChecker.java
+│   │       ├─ TodoChecker.java
+│   │       ├─ TrailingWhitespaceChecker.java
+│   │       ├─ SimpleCyclomaticComplexityChecker.java
+│   │       ├─ AdvancedCyclomaticComplexityChecker.java
+│   │       └─ JsonReportGenerator.java
+│   │
+│   └─ ComplexityTest.java
 │
 ├─ .github/
 │   └─ workflows/
 │       └─ java-ci.yml
+│
+└─ README.md
 ```
 ## Tech Stack
 - Java 17
@@ -166,7 +213,7 @@ full-fledged static analysis framework.
   - Enable package-level complexity and style summaries
 
 - **Machine-readable Output**
-  - Provide JSON output for CI/CD and toolchain integration
+  - ~~Provide JSON output for CI/CD and toolchain integration~~ ✔
   - Enable IDE plugins and external dashboards
 
 ### Long-term Vision
