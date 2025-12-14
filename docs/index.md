@@ -25,6 +25,10 @@ and usage of CodeChecker.
 - GitHub Actions CI integration
 - Clean, conditional output reporting
 
+### JSON Output
+- Outputs results in console or JSON format.
+- `JsonReportGenerator` formats the JSON output for programmatic use.
+
 ---
 
 ## 🧠 How CodeChecker Works
@@ -41,12 +45,25 @@ This modular design allows easy extension of new checks.
 ## 🏗 Architecture Overview
 
 ```
-Main
-├── IndentationChecker
-├── TodoChecker
-├── TrailingWhitespaceChecker
-├── SimpleCyclomaticComplexityChecker
-└── AdvancedCyclomaticComplexityChecker
+CodeChecker/
+│
+├─ src/
+│   ├─ main/
+│   │   ├─ java/
+│   │   │   ├─ Main.java
+│   │   │   ├─ IndentationChecker.java
+│   │   │   ├─ TodoChecker.java
+│   │   │   ├─ TrailingWhitespaceChecker.java
+│   │   │   ├─ SimpleCyclomaticComplexityChecker.java
+│   │   │   ├─ AdvancedCyclomaticComplexityChecker.java
+│   │   │   ├─ JsonReportGenerator.java
+│   └─ ComplexityTest.java
+├─ .github/
+│   └─ workflows/
+│       └─ java-ci.yml
+├─ docs/
+│   └─ index.md
+
 ```
 
 
@@ -69,6 +86,42 @@ File Total Complexity: 10
 No code style issues found!
 ```
 
+---
+
+## ⭐ Usage Section
+
+### Console Mode:
+
+```
+java -cp src/main/java Main <filepath>
+```
+
+- Example:
+
+```
+java -cp src/main/java Main src/ComplexityTest.java
+```
+
+### JSON Mode:
+
+```
+java -cp src/main/java Main <filepath> --json
+```
+
+- Example output:
+
+```
+{
+  "file": src/ComplexityTest.java,
+  "indentationIssues": [],
+  "todoIssues": [],
+  "trailingWhitespaceIssues": [],
+  "simpleCyclomaticComplexity": 10,
+  "advancedCyclomaticComplexityTotal": 10,
+  "advancedCyclomaticComplexityPerMethod": {main=10},
+  "anyIssues": false
+}
+```
 
 ---
 
