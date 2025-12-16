@@ -1,6 +1,7 @@
 ![Java CI](https://github.com/MANISH-K-07/CodeChecker/actions/workflows/java-ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Java](https://img.shields.io/badge/Java-8-blue)
+[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-brightgreen)](https://manish-k-07.github.io/CodeChecker/)
 
 # CodeChecker
 
