@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodeChecker – Static Analysis & Complexity Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-light: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --accent: #2563eb;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.65;
+        }
+
+        /* ---------- HERO ---------- */
+        header {
+            background: radial-gradient(ellipse at top, #1e293b, #020617);
+            color: #ffffff;
+            padding: 90px 20px 80px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            max-width: 900px;
+            margin: auto;
+            font-size: 1.15rem;
+            color: #e5e7eb;
+        }
+
+        .badges {
+            margin-top: 28px;
+        }
+
+        .badge {
+            display: inline-block;
+            margin: 6px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.08);
+            color: #e5e7eb;
+        }
+
+        .badge.blue { background: #2563eb; }
+        .badge.orange { background: #f97316; }
+        .badge.green { background: #16a34a; }
+
+        /* ---------- CONTENT ---------- */
+        main {
+            max-width: 1050px;
+            margin: auto;
+            padding: 60px 20px;
+        }
+
+        section {
+            margin-bottom: 70px;
+        }
+
+        h2 {
+            font-size: 1.9rem;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 6px;
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-size: 1.25rem;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background: #020617;
+            color: #e5e7eb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 0.95rem;
+        }
+
+        code {
+            font-family: "JetBrains Mono", Consolas, monospace;
+        }
+
+        .tree {
+            background: #f1f5f9;
+            padding: 18px;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .image-box {
+            margin-top: 25px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            padding: 14px;
+            background: white;
+            text-align: center;
+        }
+
+        .links a {
+            display: inline-block;
+            margin-top: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        footer {
+            background: #020617;
+            color: #94a3b8;
+            text-align: center;
+            padding: 35px 20px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>CodeChecker</h1>
+    <p>
+        A modular, extensible static code analysis framework designed to detect
+        style violations, code quality, and structural issues in Java programs.
+    </p>
+
+    <div class="badges">
+        <img src="https://img.shields.io/badge/Language-Java-blue">
+        <img src="https://img.shields.io/badge/Static%20Analysis-AST-orange">
+        <img src="https://img.shields.io/badge/Status-Active-success">
+    </div>
+</header>
+
+<main>
+
+<section>
+    <h2>Overview</h2>
+    <p>
+        CodeChecker is a Java-based static analysis tool built to evaluate
+        code style and cyclomatic complexity in Java source files. The project
+        emphasizes clean architecture, modular analysis passes, and
+        automation-friendly output formats.
+    </p>
+</section>
+
+<section>
+    <h2>🚀 Features</h2>
+
+    <h3>Code Style Analysis</h3>
+    <ul>
+        <li>Indentation validation (tabs and non-4-space indents)</li>
+        <li>Detection of TODO and FIXME comments</li>
+        <li>Trailing whitespace detection</li>
+    </ul>
+
+    <h3>Cyclomatic Complexity</h3>
+    <ul>
+        <li>File-level cyclomatic complexity</li>
+        <li>Method-level complexity analysis</li>
+        <li>Detection of logical operators, loops, conditionals, and switches</li>
+    </ul>
+
+    <h3>Developer Tooling</h3>
+    <ul>
+        <li>Command-line execution</li>
+        <li>GitHub Actions CI integration</li>
+        <li>Clean, conditional output reporting</li>
+    </ul>
+
+    <h3>JSON Output</h3>
+    <ul>
+        <li>Optional structured JSON output</li>
+        <li><code>JsonReportGenerator</code> for programmatic consumption</li>
+    </ul>
+</section>
+
+<section>
+    <h2>CodeChecker in Action 🚀</h2>
+    <p>
+        Below is a live demonstration of CodeChecker running in the terminal
+        and printing analysis results in real time.
+    </p>
+
+<div class="image-box">
+    <img src="assets/codechecker-terminal.gif" alt="CodeChecker Terminal Demo" width="100%">
+</div>
+
+    <p>
+        What this demo shows:
+    </p>
+
+
+    <ul>
+        <li>Running CodeChecker on a Java file</li>
+        <li>Simple & Advanced Cyclomatic Complexity</li>
+        <li>Per-method complexity analysis</li>
+        <li>Clean console output</li>
+        <li>Optional JSON output support</li>
+    </ul>
+
+    <div class="links">
+        <a href="https://github.com/MANISH-K-07/CodeChecker">View Source on GitHub →</a>
+    </div>
+</section>
+
+<section>
+    <h2>🧠 How CodeChecker Works</h2>
+    <ul>
+        <li>The entry point (<code>Main.java</code>) reads the file path via CLI</li>
+        <li>Each checker analyzes the file independently</li>
+        <li>Results are aggregated and printed only if issues exist</li>
+        <li>Complexity metrics are computed using control-flow keywords</li>
+    </ul>
+    <p>
+        This modular design allows easy extension of new checks without
+        impacting existing functionality.
+    </p>
+</section>
+
+<section>
+    <h2>🏗 Architecture Overview</h2>
+
+    <div class="tree">
+CodeChecker/
+│
+├─ src/
+│   ├─ main/
+│   │   ├─ java/
+│   │   │   ├─ Main.java
+│   │   │   ├─ IndentationChecker.java
+│   │   │   ├─ TodoChecker.java
+│   │   │   ├─ TrailingWhitespaceChecker.java
+│   │   │   ├─ SimpleCyclomaticComplexityChecker.java
+│   │   │   ├─ AdvancedCyclomaticComplexityChecker.java
+│   │   │   ├─ JsonReportGenerator.java
+│   └─ ComplexityTest.java
+├─ .github/
+│   └─ workflows/
+│       └─ java-ci.yml
+├─ docs/
+│   └─ index.html
+    </div>
+
+    <p>
+        Each checker follows the <strong>single-responsibility principle</strong>,
+        ensuring clarity and testability.
+    </p>
+</section>
+
+<section>
+    <h2>📊 Example Output</h2>
+
+    <pre><code>=== CodeChecker ===
+
+Simple Cyclomatic Complexity:
+Total Complexity: 10
+
+Advanced Cyclomatic Complexity per method:
+Method: main → Complexity: 10
+File Total Complexity: 10
+
+No code style issues found!</code></pre>
+</section>
+
+<section>
+    <h2>⭐ Usage</h2>
+
+    <h3>Console Mode</h3>
+    <pre><code>java -cp src/main/java Main &lt;filepath&gt;</code></pre>
+
+    <h3>JSON Mode</h3>
+    <pre><code>java -cp src/main/java Main &lt;filepath&gt; --json</code></pre>
+
+    <h3>Sample JSON Output</h3>
+    <pre><code>{
+  "file": "src/ComplexityTest.java",
+  "indentationIssues": [],
+  "todoIssues": [],
+  "trailingWhitespaceIssues": [],
+  "simpleCyclomaticComplexity": 10,
+  "advancedCyclomaticComplexityTotal": 10,
+  "advancedCyclomaticComplexityPerMethod": { "main": 10 },
+  "anyIssues": false
+}</code></pre>
+</section>
+
+<section>
+    <h2>🛣 Future Enhancements</h2>
+    <ul>
+        <li>Configuration file support</li>
+        <li>Package-level analysis</li>
+        <li>Integration with build tools (Maven / Gradle)</li>
+        <li>IDE plugin support</li>
+    </ul>
+</section>
+
+<section>
+    <h2>🎓 Academic & Portfolio Context</h2>
+    <p>
+        This project demonstrates strong Java fundamentals, understanding of
+        software quality metrics, and practical static analysis design.
+        It was built with clean architecture principles and CI automation,
+        making it suitable as a systems-oriented portfolio project.
+    </p>
+</section>
+
+</main>
+
+<footer>
+    Built for academic demonstration, systems understanding, and engineering portfolios.
+</footer>
+
+</body>
+</html>
