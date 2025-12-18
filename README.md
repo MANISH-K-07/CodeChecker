@@ -17,7 +17,7 @@ Below is a live demonstration of **CodeChecker** running in the terminal and pri
 
 Have a sneak-peek 😉
 
-![CodeChecker Terminal Demo](docs/images/codechecker-terminal.gif)
+![CodeChecker Terminal Demo](docs/assets/codechecker-terminal.gif)
 
 ---
 
