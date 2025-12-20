@@ -91,14 +91,13 @@ cd CodeChecker
 
 ## Compile Java Files
 ```
-javac -d out $(find src -name "*.java")
+javac src/*.java
 ```
 - Compiles all `.java` files in `src/`
-- Outputs `.class` files to `out/` folder
 
 ## Run CodeChecker
 ```
-java -cp out Main src/ComplexityTest.java
+java -cp src/main/java Main src/ComplexityTest.java
 ```
 - `Main.java` is the entry point
 - Replace `ComplexityTest.java` with any Java file you want to analyze
